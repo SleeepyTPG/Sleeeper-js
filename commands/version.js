@@ -10,9 +10,9 @@ module.exports = {
             .setTitle('Bot Version')
             .setDescription(`Current version: \`${version}\``)
             .addFields(
-                { name: 'Next Version', value: '`0.7.0`', inline: true },
-                { name: 'Coming Commands in `0.7.0`', value: '`/purge`, `/mute`, `/unmute`, `/suggest`', inline: true },
-                { name: 'Lead Dev', value: 'Sleeepy', inline: true },
+                { name: 'Next Version', value: '`0.7.0`', inline: false },
+                { name: 'Coming Commands in `0.7.0`', value: '`/purge`\n `/mute`\n `/unmute`\n `/suggest`', inline: false },
+                { name: 'Lead Dev', value: 'Sleeepy', inline: false },
                 { name: 'Note', value: 'This Bot is in its **Beta** phase.' }
             )
             .setColor(0x57F287);
