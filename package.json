@@ -1,6 +1,6 @@
 {
   "name": "sleeeper-js",
-  "version": "0.1.4",
+  "version": "0.6.0",
   "description": "A Multi-Use Discord Bot for Moderation, Fun, and Utility",
   "main": "main.js",
   "scripts": {
@@ -8,6 +8,10 @@
   },
   "author": "Sleeepy",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SleeepyTPG/Sleeeper-js"
+  },
   "dependencies": {
     "discord.js": "^14.14.1",
     "dotenv": "^16.4.5"

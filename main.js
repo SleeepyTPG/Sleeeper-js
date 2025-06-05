@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 require('dotenv').config();
 const { setBotActivities } = require('./activity/activity.js');
+const logsCommand = require('./commands/logs.js');
 
 const client = new Client({
     intents: [
@@ -54,6 +55,23 @@ client.on(Events.InteractionCreate, async interaction => {
     } catch (error) {
         console.error(error);
         await interaction.reply({ content: 'There was an error executing this command!', flags: 64 });
+    }
+});
+
+client.on('messageCreate', async message => {
+    if (!message.guild || message.author.bot) return;
+    if (!client.automodEnabled) return;
+    if (/(https?:\/\/[^\s]+)/gi.test(message.content)) {
+        await message.delete().catch(() => {});
+        await message.channel.send({ content: `🚫 <@${message.author.id}>, links are not allowed!`, flags: 64 }).catch(() => {});
+        // Log to the logs channel if set
+        const logChannelId = logsCommand.getLogChannelId && logsCommand.getLogChannelId();
+        if (logChannelId) {
+            const logChannel = message.guild.channels.cache.get(logChannelId);
+            if (logChannel) {
+                await logChannel.send({ content: `Deleted link from <@${message.author.id}> in <#${message.channel.id}>.` });
+            }
+        }
     }
 });
 
