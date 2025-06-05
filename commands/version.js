@@ -1,6 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
-
-const version = '0.1.0';
+const { version } = require('../package.json');
 
 module.exports = {
     data: new SlashCommandBuilder()

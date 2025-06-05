@@ -8,7 +8,8 @@ const client = new Client({
     intents: [
         GatewayIntentBits.Guilds,
         GatewayIntentBits.GuildMessages,
-        GatewayIntentBits.MessageContent
+        GatewayIntentBits.MessageContent,
+        GatewayIntentBits.GuildPresences
     ]
 });
 
@@ -30,7 +31,6 @@ const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
 
 client.once('ready', async () => {
     console.log(`Logged in as ${client.user.tag}!`);
-    setBotActivities(client);
     try {
         await rest.put(
             Routes.applicationCommands(client.user.id),
@@ -40,6 +40,7 @@ client.once('ready', async () => {
     } catch (error) {
         console.error(error);
     }
+    setBotActivities(client);
 });
 
 client.on(Events.InteractionCreate, async interaction => {
