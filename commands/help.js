@@ -21,6 +21,6 @@ module.exports = {
                 .setURL('https://github.com/SleeepyTPG/Sleeeper-js')
         );
 
-        await interaction.reply({ embeds: [embed], components: [row], ephemeral: true });
+        await interaction.reply({ embeds: [embed], components: [row] });
     }
 };

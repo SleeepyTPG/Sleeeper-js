@@ -12,6 +12,6 @@ module.exports = {
             .setDescription(`Current version: \`${version}\``)
             .setColor(0x57F287);
 
-        await interaction.reply({ embeds: [embed], ephemeral: true });
+        await interaction.reply({ embeds: [embed] });
     }
 };

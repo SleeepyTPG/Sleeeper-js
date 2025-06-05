@@ -2,6 +2,7 @@ const { Client, GatewayIntentBits, Collection, REST, Routes, Events } = require(
 const fs = require('fs');
 const path = require('path');
 require('dotenv').config();
+const { setBotActivities } = require('./activity/activity.js');
 
 const client = new Client({
     intents: [
@@ -29,6 +30,7 @@ const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
 
 client.once('ready', async () => {
     console.log(`Logged in as ${client.user.tag}!`);
+    setBotActivities(client);
     try {
         await rest.put(
             Routes.applicationCommands(client.user.id),
