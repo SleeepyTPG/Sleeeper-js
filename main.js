@@ -64,7 +64,6 @@ client.on('messageCreate', async message => {
     if (/(https?:\/\/[^\s]+)/gi.test(message.content)) {
         await message.delete().catch(() => {});
         await message.channel.send({ content: `🚫 <@${message.author.id}>, links are not allowed!`, flags: 64 }).catch(() => {});
-        // Log to the logs channel if set
         const logChannelId = logsCommand.getLogChannelId && logsCommand.getLogChannelId();
         if (logChannelId) {
             const logChannel = message.guild.channels.cache.get(logChannelId);
