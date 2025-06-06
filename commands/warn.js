@@ -21,6 +21,6 @@ module.exports = {
             .setColor(0xED4245)
             .setTimestamp();
 
-        await interaction.reply({ embeds: [embed], flags: 64 });
+        await interaction.reply({ embeds: [embed] });
     }
 };

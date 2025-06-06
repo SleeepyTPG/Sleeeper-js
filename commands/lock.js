@@ -5,10 +5,14 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('lock')
         .setDescription('Lock the current channel')
-        .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels),
+        .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
     async execute(interaction) {
+        if (!interaction.member.permissions.has(PermissionFlagsBits.Administrator)) {
+            return interaction.reply({ content: '❌ You must be an **Administrator** to use this command.', ephemeral: true });
+        }
+
         await interaction.channel.permissionOverwrites.edit(interaction.guild.roles.everyone, { SendMessages: false });
-        await interaction.reply({ content: '🔒 Channel locked.', flags: 64 });
+        await interaction.reply({ content: '🔒 Channel locked.' });
 
         const logChannelId = getLogChannelId();
         if (logChannelId) {

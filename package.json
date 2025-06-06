@@ -7,7 +7,7 @@
     "start": "node main.js"
   },
   "author": "Sleeepy",
-  "license": "MIT",
+  "license": "LGPL-2.1 license",
   "repository": {
     "type": "git",
     "url": "https://github.com/SleeepyTPG/Sleeeper-js"
