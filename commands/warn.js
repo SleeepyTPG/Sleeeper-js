@@ -1,4 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits } = require('discord.js');
+const { getLogChannelId } = require('./logs.js');
 
 const warnings = [];
 
@@ -22,5 +23,15 @@ module.exports = {
             .setTimestamp();
 
         await interaction.reply({ embeds: [embed] });
+
+        const logChannelId = getLogChannelId();
+        if (logChannelId) {
+            const logChannel = interaction.guild.channels.cache.get(logChannelId);
+            if (logChannel) {
+                await logChannel.send({
+                    content: `⚠️ <@${user.id}> was warned by ${interaction.user.tag} (${interaction.user.id}) for: ${reason} (Warn ID: ${warnId})`
+                });
+            }
+        }
     }
 };
