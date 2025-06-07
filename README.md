@@ -3,7 +3,9 @@
 Sleeeper-js is a powerful, multi-purpose Discord bot built with [discord.js](https://discord.js.org/).  
 It offers moderation, utility, fun, automod, and suggestion features for your server.
 
-![Sleeeper Bot](assets/sleeeper.jpg)
+<p align="center">
+  <img src="assets/sleeeper.jpg" width="250" alt="Sleeeper Bot">
+</p>
 
 ---
 
