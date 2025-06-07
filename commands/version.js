@@ -10,8 +10,8 @@ module.exports = {
             .setTitle('Bot Version')
             .setDescription(`Current version: \`${version}\``)
             .addFields(
-                { name: 'Next Version', value: '`0.8.0`', inline: false },
-                { name: 'Coming Commands in `0.8.0`', value: '`/userinfo`\n `/serverinfo`\n `/avatar`\n `/remind`', inline: false },
+                { name: 'Next Version', value: '`0.9.0`', inline: false },
+                { name: 'Coming Commands in `0.9.0`', value: '`/poll`\n `/roleinfo`\n `/quote`\n `/serverbanner`', inline: false },
                 { name: 'Lead Dev', value: 'Sleeepy', inline: false },
                 { name: 'Note', value: 'This Bot is in its **Beta** phase.' }
             )
