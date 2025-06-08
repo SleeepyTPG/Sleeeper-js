@@ -20,7 +20,6 @@ function getCpuUsage() {
 
 function getDiskUsage() {
     try {
-        const stat = fs.statSync('/');
         return 'N/A (platform dependent)';
     } catch {
         return 'N/A';
@@ -41,28 +40,30 @@ module.exports = {
         const freeMem = (os.freemem() / 1024 / 1024).toFixed(0);
         const usedMem = totalMem - freeMem;
         const diskUsage = getDiskUsage();
-
         const guildCount = client.guilds.cache.size;
 
-        let errors = 'None';
+        let errors = '✅ None';
         if (fs.existsSync('./error.log')) {
             const errContent = fs.readFileSync('./error.log', 'utf8');
-            errors = errContent ? 'See error.log' : 'None';
+            errors = errContent ? '⚠️ See error.log' : '✅ None';
         }
 
         const embed = new EmbedBuilder()
-            .setTitle('Bot Status')
-            .setColor(0x5865F2)
+            .setTitle('🟢 Bot Status')
+            .setDescription('Here is the current status of your bot:')
+            .setColor(0x00B86B)
+            .setThumbnail(interaction.client.user.displayAvatarURL())
             .addFields(
-                { name: 'Utility', value: '** **', inline: false },
-                { name: 'CPU Usage', value: `${cpuUsage}%`, inline: true },
-                { name: 'RAM Usage', value: `${usedMem}MB / ${totalMem}MB`, inline: true },
-                { name: 'Disk Usage', value: diskUsage, inline: true },
+                { name: '🛠️ Utility', value: 'System resource usage and stats:', inline: false },
+                { name: 'CPU Usage', value: `\`${cpuUsage}%\``, inline: true },
+                { name: 'RAM Usage', value: `\`${usedMem}MB / ${totalMem}MB\``, inline: true },
+                { name: 'Disk Usage', value: `\`${diskUsage}\``, inline: true },
                 { name: '\u200B', value: '━━━━━━━━━━━━━━━━━━━━━━━', inline: false },
-                { name: 'Information', value: '** **', inline: false },
-                { name: 'Servers', value: `${guildCount}`, inline: true },
+                { name: 'ℹ️ Information', value: 'Bot and server info:', inline: false },
+                { name: 'Servers', value: `\`${guildCount}\``, inline: true },
                 { name: 'Errors', value: errors, inline: true }
             )
+            .setFooter({ text: `Requested by ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL() })
             .setTimestamp();
 
         await interaction.reply({ embeds: [embed], ephemeral: true });
