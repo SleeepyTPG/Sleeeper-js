@@ -1,6 +1,26 @@
 const { SlashCommandBuilder, PermissionFlagsBits, EmbedBuilder, ChannelType, ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType } = require('discord.js');
+const fs = require('fs');
+const path = require('path');
 
-const suggestChannels = {};
+const DATA_PATH = path.join(__dirname, '../data/suggestions.json');
+
+let suggestChannels = {};
+let suggestionCounter = 1;
+
+if (fs.existsSync(DATA_PATH)) {
+    try {
+        const data = JSON.parse(fs.readFileSync(DATA_PATH, 'utf8'));
+        suggestChannels = data.suggestChannels || {};
+        suggestionCounter = data.suggestionCounter || 1;
+    } catch (e) {
+        console.error('Failed to load suggestions data:', e);
+    }
+}
+
+function saveSuggestions() {
+    fs.mkdirSync(path.dirname(DATA_PATH), { recursive: true });
+    fs.writeFileSync(DATA_PATH, JSON.stringify({ suggestChannels, suggestionCounter }, null, 2));
+}
 
 module.exports = {
     data: [
@@ -27,6 +47,7 @@ module.exports = {
         if (interaction.commandName === 'setsuggestchannel') {
             const channel = interaction.options.getChannel('channel');
             suggestChannels[interaction.guild.id] = channel.id;
+            saveSuggestions();
             await interaction.reply({ content: `✅ Suggestions will now be sent to ${channel}.`, ephemeral: true });
         }
 
@@ -41,29 +62,50 @@ module.exports = {
                 return interaction.reply({ content: '❌ The suggestion channel could not be found. Please ask an admin to set it again.', ephemeral: true });
             }
 
+            const suggestionNumber = suggestionCounter++;
+            saveSuggestions();
+
+            let upvotes = 0;
+            let downvotes = 0;
+            let votedUsers = new Set();
+
             const embed = new EmbedBuilder()
-                .setTitle('New Suggestion')
-                .setDescription(suggestion)
+                .setTitle(`Suggestion #${suggestionNumber}`)
+                .setDescription(`\`${suggestion}\``)
                 .setColor(0x5865F2)
                 .setFooter({ text: `Suggested by ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL() })
-                .setTimestamp();
+                .setTimestamp()
+                .addFields(
+                    { name: 'Upvotes', value: `${upvotes}`, inline: true },
+                    { name: 'Downvotes', value: `${downvotes}`, inline: true }
+                );
 
             const row = new ActionRowBuilder().addComponents(
                 new ButtonBuilder()
+                    .setCustomId('suggest_upvote')
+                    .setLabel('Upvote')
+                    .setStyle(ButtonStyle.Success)
+                    .setEmoji('👍'),
+                new ButtonBuilder()
+                    .setCustomId('suggest_downvote')
+                    .setLabel('Downvote')
+                    .setStyle(ButtonStyle.Danger)
+                    .setEmoji('👎'),
+                new ButtonBuilder()
                     .setCustomId('suggest_accept')
                     .setLabel('Accept')
-                    .setStyle(ButtonStyle.Success),
+                    .setStyle(ButtonStyle.Primary)
+                    .setEmoji('✅'),
                 new ButtonBuilder()
                     .setCustomId('suggest_deny')
                     .setLabel('Deny')
-                    .setStyle(ButtonStyle.Danger)
+                    .setStyle(ButtonStyle.Secondary)
+                    .setEmoji('❌')
             );
 
             const msg = await channel.send({ embeds: [embed], components: [row] });
-            await msg.react('👍');
-            await msg.react('👎');
 
-            await interaction.reply({ content: `✅ Your suggestion has been sent to ${channel}.`, ephemeral: true });
+            await interaction.reply({ content: `✅ Your suggestion (#${suggestionNumber}) has been sent to ${channel}.`, ephemeral: true });
 
             const collector = msg.createMessageComponentCollector({
                 componentType: ComponentType.Button,
@@ -71,6 +113,21 @@ module.exports = {
             });
 
             collector.on('collect', async i => {
+                if (i.customId === 'suggest_upvote' || i.customId === 'suggest_downvote') {
+                    if (votedUsers.has(i.user.id)) {
+                        return i.reply({ content: '❌ You have already voted on this suggestion.', ephemeral: true });
+                    }
+                    if (i.customId === 'suggest_upvote') upvotes++;
+                    if (i.customId === 'suggest_downvote') downvotes++;
+                    votedUsers.add(i.user.id);
+
+                    embed.data.fields[0].value = `${upvotes}`;
+                    embed.data.fields[1].value = `${downvotes}`;
+                    await msg.edit({ embeds: [embed], components: [row] });
+                    await i.reply({ content: '✅ Vote registered!', ephemeral: true });
+                    return;
+                }
+
                 if (!i.member.permissions.has(PermissionFlagsBits.Administrator)) {
                     return i.reply({ content: '❌ Only administrators can accept or deny suggestions.', ephemeral: true });
                 }

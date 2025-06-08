@@ -1,7 +1,24 @@
 const { SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits } = require('discord.js');
 const { getLogChannelId } = require('./logs.js');
+const fs = require('fs');
+const path = require('path');
 
-const warnings = [];
+const DATA_PATH = path.join(__dirname, '../data/warnings.json');
+
+let warnings = [];
+
+if (fs.existsSync(DATA_PATH)) {
+    try {
+        warnings = JSON.parse(fs.readFileSync(DATA_PATH, 'utf8'));
+    } catch (e) {
+        console.error('Failed to load warnings data:', e);
+    }
+}
+
+function saveWarnings() {
+    fs.mkdirSync(path.dirname(DATA_PATH), { recursive: true });
+    fs.writeFileSync(DATA_PATH, JSON.stringify(warnings, null, 2));
+}
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -15,6 +32,7 @@ module.exports = {
         const reason = interaction.options.getString('reason');
         const warnId = warnings.length + 1;
         warnings.push({ id: warnId, user: user.id, reason, mod: interaction.user.id, date: new Date() });
+        saveWarnings();
 
         const embed = new EmbedBuilder()
             .setTitle('User Warned')

@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
-const { getLogChannelId } = require('./logs.js'); // Add this line
+const { getLogChannelId } = require('./logs.js');
 
 const automodTypes = [
     { name: 'anti-link', description: 'Block messages containing links' },
