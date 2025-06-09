@@ -18,9 +18,13 @@ function setBotActivities(client) {
 
     let i = 0;
     setInterval(() => {
-        const activity = activities[i % activities.length](client);
-        client.user.setActivity(activity);
-        i++;
+        if (Math.random() < 1 / 50) {
+            client.user.setActivity({ name: 'with Jimmy', type: ActivityType.Playing });
+        } else {
+            const activity = activities[i % activities.length](client);
+            client.user.setActivity(activity);
+            i++;
+        }
     }, 10000);
 }
 

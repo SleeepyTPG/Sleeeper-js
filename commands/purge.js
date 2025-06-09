@@ -14,11 +14,11 @@ module.exports = {
     async execute(interaction) {
         const amount = interaction.options.getInteger('amount');
         if (amount < 2 || amount > 100) {
-            return interaction.reply({ content: '❌ Please provide a number between 2 and 100.', ephemeral: true });
+            return interaction.reply({ content: '❌ Please provide a number between 2 and 100.', flags: 64 });
         }
 
         await interaction.channel.bulkDelete(amount, true);
-        await interaction.reply({ content: `🧹 Deleted ${amount} messages.`, ephemeral: true });
+        await interaction.reply({ content: `🧹 Deleted ${amount} messages.`, flags: 64 });
 
         const logChannelId = getLogChannelId();
         if (logChannelId) {
