@@ -5,7 +5,6 @@ require('dotenv').config();
 const { setBotActivities } = require('./activity/activity.js');
 const logsCommand = require('./commands/logs.js');
 const { logError } = require('./events/errors.js');
-const { logCommandErrorToDiscord } = require('./events/errordclog.js');
 
 const client = new Client({
     intents: [
@@ -64,7 +63,6 @@ client.on(Events.InteractionCreate, async interaction => {
         await command.execute(interaction, client);
     } catch (error) {
         logError(error, `command:${interaction.commandName}`);
-        await logCommandErrorToDiscord(client, interaction, error);
         await interaction.reply({ content: 'There was an error executing this command!', flags: 64 });
     }
 });
