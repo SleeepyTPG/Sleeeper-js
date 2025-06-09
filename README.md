@@ -1,7 +1,7 @@
 # ✨ Welcome to Sleeeper-js! ✨
 
 <p align="center">
-  <img src="assets/sleeeper_title.png" alt="Sleeeper Bot" width="400">
+  <img src="assets/sleeeper_title.png" alt="Sleeeper Bot" width="320">
 </p>
 
 <p align="center">
@@ -44,6 +44,17 @@ This project is licensed under the **LGPL-2.1** license.
 ---
 
 <p align="center">
-  <b>Lead Developer:</b> Sleeepy<br>
-  <b>GitHub:</b> <a href="https://github.com/SleeepyTPG/Sleeeper-js">SleeepyTPG/Sleeeper-js</a>
+  <a href="https://discord.gg/WwApdk4z4H" title="Join our Discord!">
+    <img src="https://cdn.jsdelivr.net/gh/edent/SuperTinyIcons/images/svg/discord.svg" alt="Discord" width="32" style="vertical-align:middle; margin-right:8px;">
+  </a>
+  <a href="https://github.com/SleeepyTPG/Sleeeper-js" title="GitHub Repository">
+    <img src="https://cdn.jsdelivr.net/gh/edent/SuperTinyIcons/images/svg/github.svg" alt="GitHub" width="32" style="vertical-align:middle; margin-right:8px;">
+  </a>
+  <a href="https://discord.js.org/" title="discord.js Docs">
+    <img src="https://cdn.jsdelivr.net/gh/edent/SuperTinyIcons/images/svg/javascript.svg" alt="discord.js" width="32" style="vertical-align:middle; margin-right:8px;">
+  </a>
+</p>
+
+<p align="center">
+  <b>Lead Developer:</b> Sleeepy
 </p>
