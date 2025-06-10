@@ -37,17 +37,17 @@ module.exports = {
         const reason = interaction.options.getString('reason') || 'No reason provided';
 
         if (!member) {
-            return interaction.reply({ content: '❌ User not found or not in this server.', ephemeral: true });
+            return interaction.reply({ content: '❌ User not found or not in this server.', Flags: 64 });
         }
 
         if (command === 'mute') {
             const durationStr = interaction.options.getString('duration');
             const durationMs = parseDuration(durationStr);
             if (!durationMs || durationMs < 1000 || durationMs > 28 * 24 * 60 * 60 * 1000) {
-                return interaction.reply({ content: '❌ Invalid duration! Use formats like `10m`, `2h`, `1d` (max 28d).', ephemeral: true });
+                return interaction.reply({ content: '❌ Invalid duration! Use formats like `10m`, `2h`, `1d` (max 28d).', Flags: 64 });
             }
             if (!member.moderatable) {
-                return interaction.reply({ content: '❌ I cannot mute this user.', ephemeral: true });
+                return interaction.reply({ content: '❌ I cannot mute this user.', Flags: 64 });
             }
             await member.timeout(durationMs, reason);
             await interaction.reply({ content: `🔇 <@${member.id}> has been muted for **${durationStr}**. Reason: ${reason}` });
@@ -71,7 +71,7 @@ module.exports = {
 
         if (command === 'unmute') {
             if (!member.moderatable) {
-                return interaction.reply({ content: '❌ I cannot unmute this user.', ephemeral: true });
+                return interaction.reply({ content: '❌ I cannot unmute this user.', Flags: 64 });
             }
             await member.timeout(null, 'Unmuted by command');
             await interaction.reply({ content: `🔊 <@${member.id}> has been unmuted.` });

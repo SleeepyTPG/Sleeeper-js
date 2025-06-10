@@ -19,10 +19,8 @@ module.exports = {
                     name: '🆕 Coming in `1.0.0 RELEASE`', 
                     value: 
                         '• `/music` — Play music from YouTube and Spotify links\n' +
-                        '• `/starboard` — Highlight starred messages in a special channel\n' +
                         '• `/level` — Show your server XP and leaderboard\n' +
                         '• `/giveaway` — Create and manage server giveaways\n' +
-                        '• `/ticket` — Open support tickets with staff\n' +
                         '• `/birthday` — Set and announce member birthdays',
                     inline: true 
                 },

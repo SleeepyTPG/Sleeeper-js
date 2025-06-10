@@ -53,7 +53,7 @@ module.exports = {
         if (interaction.options.getSubcommand() === 'list') {
             const serverQuotes = quotes[guildId] || [];
             if (serverQuotes.length === 0) {
-                return interaction.reply({ content: 'No quotes saved for this server yet!', ephemeral: true });
+                return interaction.reply({ content: 'No quotes saved for this server yet!', Flags: 64 });
             }
 
             const embed = new EmbedBuilder()
@@ -70,7 +70,7 @@ module.exports = {
 
             embed.setDescription(desc);
 
-            await interaction.reply({ embeds: [embed], ephemeral: false });
+            await interaction.reply({ embeds: [embed] });
         }
     }
 };

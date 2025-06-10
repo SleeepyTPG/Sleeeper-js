@@ -10,11 +10,25 @@ module.exports = {
         .addStringOption(opt => opt.setName('option3').setDescription('Option 3').setRequired(false))
         .addStringOption(opt => opt.setName('option4').setDescription('Option 4').setRequired(false))
         .addStringOption(opt => opt.setName('option5').setDescription('Option 5').setRequired(false))
-        .addIntegerOption(opt => 
-            opt.setName('duration')
-                .setDescription('Poll duration in minutes (default: 60, max: 1440)')
+        .addIntegerOption(opt =>
+            opt.setName('minutes')
+                .setDescription('Poll duration in minutes (optional)')
                 .setMinValue(1)
-                .setMaxValue(1440)
+                .setMaxValue(4320)
+                .setRequired(false)
+        )
+        .addIntegerOption(opt =>
+            opt.setName('hours')
+                .setDescription('Poll duration in hours (optional)')
+                .setMinValue(1)
+                .setMaxValue(72)
+                .setRequired(false)
+        )
+        .addIntegerOption(opt =>
+            opt.setName('days')
+                .setDescription('Poll duration in days (max: 3)')
+                .setMinValue(1)
+                .setMaxValue(3)
                 .setRequired(false)
         ),
     async execute(interaction) {
@@ -31,13 +45,20 @@ module.exports = {
             return interaction.reply({ content: 'You must provide at least 2 options!', ephemeral: true });
         }
 
+        let minutes = interaction.options.getInteger('minutes') || 0;
+        let hours = interaction.options.getInteger('hours') || 0;
+        let days = interaction.options.getInteger('days') || 0;
+
+        let totalMinutes = (days * 24 * 60) + (hours * 60) + minutes;
+        if (totalMinutes === 0) totalMinutes = 60;
+        if (totalMinutes > 4320) totalMinutes = 4320;
+
+        const durationMs = totalMinutes * 60 * 1000;
+        const endTime = Date.now() + durationMs;
+
         const emojis = ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣'];
         const votes = Array(options.length).fill(0);
         const voters = new Map();
-
-        const duration = interaction.options.getInteger('duration') || 60;
-        const durationMs = duration * 60 * 1000;
-        const endTime = Date.now() + durationMs;
 
         const getResults = () =>
             options.map((opt, i) => `${emojis[i]} **${opt}**\n> Votes: \`${votes[i]}\``).join('\n\n');

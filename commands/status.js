@@ -32,7 +32,7 @@ module.exports = {
         .setDescription('Show bot status (owner only)'),
     async execute(interaction, client) {
         if (interaction.user.id !== OWNER_ID) {
-            return interaction.reply({ content: '❌ This command is only for the bot owner.', ephemeral: true });
+            return interaction.reply({ content: '❌ This command is only for the bot owner.', Flags: 64 });
         }
 
         const cpuUsage = getCpuUsage();

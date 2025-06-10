@@ -26,7 +26,7 @@ module.exports = {
                 )
                 .setColor(0x5865F2);
 
-            await interaction.reply({ embeds: [embed], ephemeral: true });
+            await interaction.reply({ embeds: [embed], Flags: 64 });
         }
 
         if (interaction.commandName === 'avatar') {
@@ -36,7 +36,7 @@ module.exports = {
                 .setImage(user.displayAvatarURL({ size: 4096 }))
                 .setColor(0x5865F2);
 
-            await interaction.reply({ embeds: [embed], ephemeral: true });
+            await interaction.reply({ embeds: [embed], Flags: 64 });
         }
     }
 };

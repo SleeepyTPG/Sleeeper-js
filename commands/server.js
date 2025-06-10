@@ -34,6 +34,6 @@ module.exports = {
             embed.setImage(guild.bannerURL({ size: 1024 }));
         }
 
-        await interaction.reply({ embeds: [embed], ephemeral: true });
+        await interaction.reply({ embeds: [embed] });
     }
 };

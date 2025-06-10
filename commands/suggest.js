@@ -48,18 +48,18 @@ module.exports = {
             const channel = interaction.options.getChannel('channel');
             suggestChannels[interaction.guild.id] = channel.id;
             saveSuggestions();
-            await interaction.reply({ content: `✅ Suggestions will now be sent to ${channel}.`, ephemeral: true });
+            await interaction.reply({ content: `✅ Suggestions will now be sent to ${channel}.`, Flags: 64 });
         }
 
         if (interaction.commandName === 'suggest') {
             const suggestion = interaction.options.getString('suggestion');
             const channelId = suggestChannels[interaction.guild.id];
             if (!channelId) {
-                return interaction.reply({ content: '❌ Suggestion channel is not set. Please ask an admin to use `/setsuggestchannel`.', ephemeral: true });
+                return interaction.reply({ content: '❌ Suggestion channel is not set. Please ask an admin to use `/setsuggestchannel`.', Flags: 64 });
             }
             const channel = interaction.guild.channels.cache.get(channelId);
             if (!channel) {
-                return interaction.reply({ content: '❌ The suggestion channel could not be found. Please ask an admin to set it again.', ephemeral: true });
+                return interaction.reply({ content: '❌ The suggestion channel could not be found. Please ask an admin to set it again.', Flags: 64 });
             }
 
             const suggestionNumber = suggestionCounter++;
@@ -105,7 +105,7 @@ module.exports = {
 
             const msg = await channel.send({ embeds: [embed], components: [row] });
 
-            await interaction.reply({ content: `✅ Your suggestion (#${suggestionNumber}) has been sent to ${channel}.`, ephemeral: true });
+            await interaction.reply({ content: `✅ Your suggestion (#${suggestionNumber}) has been sent to ${channel}.`, Flags: 64 });
 
             const collector = msg.createMessageComponentCollector({
                 componentType: ComponentType.Button,
@@ -115,7 +115,7 @@ module.exports = {
             collector.on('collect', async i => {
                 if (i.customId === 'suggest_upvote' || i.customId === 'suggest_downvote') {
                     if (votedUsers.has(i.user.id)) {
-                        return i.reply({ content: '❌ You have already voted on this suggestion.', ephemeral: true });
+                        return i.reply({ content: '❌ You have already voted on this suggestion.', Flags: 64 });
                     }
                     if (i.customId === 'suggest_upvote') upvotes++;
                     if (i.customId === 'suggest_downvote') downvotes++;
@@ -124,25 +124,25 @@ module.exports = {
                     embed.data.fields[0].value = `${upvotes}`;
                     embed.data.fields[1].value = `${downvotes}`;
                     await msg.edit({ embeds: [embed], components: [row] });
-                    await i.reply({ content: '✅ Vote registered!', ephemeral: true });
+                    await i.reply({ content: '✅ Vote registered!', Flags: 64 });
                     return;
                 }
 
                 if (!i.member.permissions.has(PermissionFlagsBits.Administrator)) {
-                    return i.reply({ content: '❌ Only administrators can accept or deny suggestions.', ephemeral: true });
+                    return i.reply({ content: '❌ Only administrators can accept or deny suggestions.', Flags: 64 });
                 }
                 if (i.customId === 'suggest_accept') {
                     embed.setColor(0x57F287)
                         .addFields({ name: 'Status', value: `✅ Accepted by ${i.user.tag}` });
                     await msg.edit({ embeds: [embed], components: [] });
-                    await i.reply({ content: 'Suggestion accepted.', ephemeral: true });
+                    await i.reply({ content: 'Suggestion accepted.', Flags: 64 });
                     collector.stop();
                 }
                 if (i.customId === 'suggest_deny') {
                     embed.setColor(0xED4245)
                         .addFields({ name: 'Status', value: `❌ Denied by ${i.user.tag}` });
                     await msg.edit({ embeds: [embed], components: [] });
-                    await i.reply({ content: 'Suggestion denied.', ephemeral: true });
+                    await i.reply({ content: 'Suggestion denied.', Flags: 64 });
                     collector.stop();
                 }
             });
