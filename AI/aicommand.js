@@ -4,10 +4,10 @@ const { GoogleGenerativeAI } = require('@google/generative-ai');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('ask')
-        .setDescription('Stelle eine Frage und erhalte eine KI-Antwort von Google Gemini')
+        .setDescription('Ask a question and get an AI-powered answer from Google Gemini')
         .addStringOption(opt =>
             opt.setName('question')
-                .setDescription('Deine Frage')
+                .setDescription('Your question')
                 .setRequired(true)
         ),
     async execute(interaction) {
@@ -23,10 +23,10 @@ module.exports = {
             const answer = response.text();
 
             await interaction.editReply({
-                content: answer ? `💡 **Antwort:** ${answer}` : '❌ Keine Antwort von Gemini erhalten.'
+                content: answer ? `💡 **Answer:** ${answer}` : '❌ No answer received from Gemini.'
             });
         } catch (err) {
-            await interaction.editReply({ content: `❌ Fehler: ${err.message}` });
+            await interaction.editReply({ content: `❌ Error: ${err.message}` });
         }
     }
 };
