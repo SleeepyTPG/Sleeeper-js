@@ -14,18 +14,16 @@ module.exports = {
             .setColor(0x57F287)
             .setThumbnail(interaction.client.user.displayAvatarURL())
             .addFields(
-                { name: '🚀 Next Version', value: '`1.0.0 RELEASE`', inline: false },
+                { name: '🚀 Latest Release', value: '`1.0.0 RELEASED`', inline: false },
                 { 
-                    name: '🆕 Coming in `1.0.0 RELEASE`', 
+                    name: '🆕 Coming in `1.5.0`', 
                     value: 
-                        '• `/music` — Play music from YouTube and Spotify links\n' +
-                        '• `/level` — Show your server XP and leaderboard\n' +
-                        '• `/giveaway` — Create and manage server giveaways\n' +
-                        '• `/birthday` — Set and announce member birthdays',
+                        '• `Economy System` — Let your Members engage in new ways!\n' +
+                        '• `/emojisteal` — No more manual emoji stealing!\n',
                     inline: true 
                 },
                 { name: '👤 Lead Developer', value: 'Sleeepy', inline: false },
-                { name: 'ℹ️ Note', value: 'This bot is in its **Beta** phase.\nThank you for testing and supporting!' }
+                { name: 'ℹ️ Note', value: 'Sleeeper-js is now fully released! Thank you for your support!' }
             )
             .setFooter({ text: 'Sleeeper-js • Discord Bot', iconURL: interaction.client.user.displayAvatarURL() })
             .setTimestamp();
