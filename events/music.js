@@ -63,7 +63,7 @@ module.exports = {
             const resource = createAudioResource(stream.stream, { inputType: stream.type });
             player.play(resource);
 
-            await interaction.followUp({ content: `▶️ Now playing: **${title}** (requested by ${track.requestedBy})`, flags: 64 });
+            await interaction.followUp({ content: `▶️ Now playing: **${title}** (requested by ${track.requestedBy})` });
 
             player.once(AudioPlayerStatus.Idle, playNext);
         }

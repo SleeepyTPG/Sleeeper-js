@@ -28,6 +28,6 @@ module.exports = {
         }
 
         interaction.client.emit('playMusic', interaction, url, voiceChannel);
-        await interaction.reply({ content: '🎶 Added to queue! Use `/music` again to add more.', flags: 64 });
+        await interaction.reply({ content: '🎶 Added to queue! Use `/music` again to add more.' });
     }
 };
