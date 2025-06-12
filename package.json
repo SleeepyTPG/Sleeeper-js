@@ -1,6 +1,6 @@
 {
   "name": "sleeeper-js",
-  "version": "0.9.0",
+  "version": "1.0.0 RELEASE",
   "description": "A Multi-Use Discord Bot for Moderation, Fun, and Utility",
   "main": "main.js",
   "scripts": {
