@@ -17,23 +17,27 @@ const client = new Client({
 
 client.commands = new Collection();
 const commands = [];
-const commandsPath = path.join(__dirname, 'commands');
-const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
 
-for (const file of commandFiles) {
-    const filePath = path.join(commandsPath, file);
-    const command = require(filePath);
+const commandFolders = ['commands', 'AI'];
+for (const folder of commandFolders) {
+    const folderPath = path.join(__dirname, folder);
+    if (!fs.existsSync(folderPath)) continue;
+    const commandFiles = fs.readdirSync(folderPath).filter(file => file.endsWith('.js'));
+    for (const file of commandFiles) {
+        const filePath = path.join(folderPath, file);
+        const command = require(filePath);
 
-    if (Array.isArray(command.data)) {
-        for (const cmd of command.data) {
-            if ('name' in cmd && 'execute' in command) {
-                client.commands.set(cmd.name, { ...command, data: cmd });
-                commands.push(cmd.toJSON());
+        if (Array.isArray(command.data)) {
+            for (const cmd of command.data) {
+                if ('name' in cmd && 'execute' in command) {
+                    client.commands.set(cmd.name, { ...command, data: cmd });
+                    commands.push(cmd.toJSON());
+                }
             }
+        } else if ('data' in command && 'execute' in command) {
+            client.commands.set(command.data.name, command);
+            commands.push(command.data.toJSON());
         }
-    } else if ('data' in command && 'execute' in command) {
-        client.commands.set(command.data.name, command);
-        commands.push(command.data.toJSON());
     }
 }
 
