@@ -42,6 +42,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('level')
         .setDescription('Show your level, another user\'s level, the leaderboard, or set the level-up channel')
+        .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
         .addSubcommand(sub =>
             sub.setName('me')
                 .setDescription('Show your current level and XP')
@@ -68,7 +69,6 @@ module.exports = {
                         .addChannelTypes(ChannelType.GuildText)
                         .setRequired(true)
                 )
-                .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
         ),
     async execute(interaction) {
         const guildId = interaction.guild.id;
