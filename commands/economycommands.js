@@ -118,7 +118,7 @@ module.exports = {
             const reward = Math.floor(Math.random() * 100) + 100;
             addCoins(guildId, userId, reward);
             setLastDaily(guildId, userId, now);
-            return interaction.reply({ content: `🎁 You claimed your daily reward of **${reward}** 💤 Sleep Coins!`, flags: 64 });
+            return interaction.reply({ content: `🎁 You claimed your daily reward of **${reward}** 💤 Sleep Coins!` });
         }
 
         if (interaction.commandName === 'pay') {
@@ -130,7 +130,7 @@ module.exports = {
 
             addCoins(guildId, userId, -amount);
             addCoins(guildId, target.id, amount);
-            return interaction.reply({ content: `✅ You sent **${amount}** 💤 Sleep Coins to **${target.tag}**!`, flags: 64 });
+            return interaction.reply({ content: `✅ You sent **${amount}** 💤 Sleep Coins to **${target.tag}**!` });
         }
 
         if (interaction.commandName === 'richest') {
@@ -163,10 +163,10 @@ module.exports = {
             const win = Math.random() < 0.5;
             if (win) {
                 addCoins(guildId, userId, amount);
-                return interaction.reply({ content: `🪙 The coin landed on **${result}**! You won **${amount}** 💤 Sleep Coins!`, flags: 64 });
+                return interaction.reply({ content: `🪙 The coin landed on **${result}**! You won **${amount}** 💤 Sleep Coins!` });
             } else {
                 addCoins(guildId, userId, -amount);
-                return interaction.reply({ content: `🪙 The coin landed on **${result}**! You lost **${amount}** 💤 Sleep Coins!`, flags: 64 });
+                return interaction.reply({ content: `🪙 The coin landed on **${result}**! You lost **${amount}** 💤 Sleep Coins!` });
             }
         }
 
@@ -197,7 +197,7 @@ module.exports = {
                 addCoins(guildId, userId, -amount);
                 resultMsg += `**You lost ${amount} 💤 Sleep Coins!**`;
             }
-            return interaction.reply({ content: resultMsg, flags: 64 });
+            return interaction.reply({ content: resultMsg });
         }
     },
     coins,
