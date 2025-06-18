@@ -17,7 +17,8 @@ module.exports = {
                     name: '🆕 Coming in `v2.5.0`', 
                     value: 
                         '• `/counting` — Count to infinity with your friends!\n' +
-                        '• `/autorole` — Set an Role that is added to new members!\n',
+                        '• `/autorole` — Set an Role that is added to new members!\n' +
+                        '• `Improving the embed builder`\n',
                     inline: true 
                 },
                 { name: '👤 Lead Developer', value: 'Sleeepy', inline: false },
